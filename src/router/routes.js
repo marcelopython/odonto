@@ -1,9 +1,9 @@
 export default [
-  {
-    path: '/',
-    name: 'Home',
-    component: () => import('@/views/Index'),
-  },
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: () => import('@/views/Index'),
+  // },
   {
     path: '/dashboard',
     component: () => import('@/layouts/DashboardLayout.vue'),
@@ -26,12 +26,16 @@ export default [
     ],
   },
   {
-    path: '/auth',
+    path: '/',
+    beforeEnter: (to, from, next) => {
+      console.log(to)
+      return next();
+    },
     name: 'Auth',
     component: () => import('@/layouts/AuthenticationLayout.vue'),
     children: [
       {
-        path: '/auth/login',
+        path: '/login',
         name: 'Login',
         component: () => import('@/views/auth/Login.vue'),
       },

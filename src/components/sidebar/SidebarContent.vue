@@ -106,9 +106,9 @@
             </template>
         </SidebarLink>
         <SidebarLink  
-            :to="{ name: 'Blank' }"
+            :to="{ name: 'User' }"
              title="Usuários" 
-             :active="isCurrentRoute('Blank')"
+             :active="isCurrentRoute('User')"
              >
             <template #icon>
                 <UserCircleIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
