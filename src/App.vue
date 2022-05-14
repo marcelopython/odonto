@@ -28,6 +28,10 @@ export default {
             this.$store.state.user = res.data.user
             this.$store.state.roles = res.data.roles
             this.$store.state.isLogged = true
+          }).catch(e=>{
+            if(e.response.status === 401){
+            this.$router.push('/login')
+            }
           })
       } else {
         this.$store.state.isLogged = false

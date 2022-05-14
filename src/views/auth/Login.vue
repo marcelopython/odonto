@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       loginForm: {
-        email: 'msr88ss9sssss57@gmail.com',
+        email: 'msr@gmail.com',
         password: '98653274',
         remember: false,
         processing: false,
@@ -100,6 +100,7 @@ export default {
       client
         .postLogin('/login', { username: this.loginForm.email, password: this.loginForm.password })
         .then((response) => {
+            console.log(response)
           if (!response.error) {
             Cookie.set('access_token', response.access_token)
             Cookie.set('isLogged', true)
