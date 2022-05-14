@@ -44,14 +44,14 @@
 
       <!-- Remember me -->
       <div class="flex items-center justify-between">
-        <label class="flex items-center">
+        <!-- <label class="flex items-center">
           <Checkbox name="remember" v-model:checked="loginForm.remember" />
           <span class="ml-2 text-sm text-gray-600">Remember me</span>
-        </label>
+        </label> -->
 
-        <router-link :to="{ name: 'ForgotPassword' }" class="text-sm text-blue-500 hover:underline"
+        <!-- <router-link :to="{ name: 'ForgotPassword' }" class="text-sm text-blue-500 hover:underline"
           >Forgot your password?</router-link
-        >
+        > -->
       </div>
 
       <!-- Login button -->
@@ -63,15 +63,15 @@
           v-slot="{ iconSizeClasses }"
         >
           <LoginIcon aria-hidden="true" :class="iconSizeClasses" />
-          <span>Log in</span>
+          <span>Entrar</span>
         </Button>
       </div>
 
       <!-- Register link -->
-      <p class="text-sm text-gray-600 dark:text-gray-400">
-        Don't have an account?
-        <router-link :to="{ name: 'Register' }" class="text-blue-500 hover:underline">Register</router-link>
-      </p>
+      <!-- <p class="text-sm text-gray-600 dark:text-gray-400"> -->
+        <!-- Don't have an account? -->
+        <!-- <router-link :to="{ name: 'Register' }" class="text-blue-500 hover:underline">Register</router-link> -->
+      <!-- </p> -->
     </div>
   </form>
 </template>
@@ -101,6 +101,8 @@ export default {
           console.log(response)
           if (!response.error) {
             Cookie.set('access_token', response.access_token)
+            Cookie.set('isLogged', true)
+            Cookie.set('roles', JSON.stringify(response.roles))
             this.$store.state.user = response.user
             this.$store.state.roles = response.roles
             this.$store.state.isLogged = true

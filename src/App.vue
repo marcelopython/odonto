@@ -26,7 +26,7 @@ export default {
           this.$store.state.access_token = Cookie.get('access_token')
           client.get('user/logged').then(res => {
             this.$store.state.user = res.data.user
-            this.$store.state.user = res.data.roles
+            this.$store.state.roles = res.data.roles
             this.$store.state.isLogged = true
           })
       } else {

@@ -5,6 +5,7 @@
         class="relative flex flex-col flex-1 max-h-full gap-4 px-3"
     >
         <SidebarLink
+            v-if="permission('dashboard.read')"
             title="Dashboard"
             :to="{ name: 'Dashboard' }"
             :active="isCurrentRoute('Dashboard')"
@@ -13,7 +14,8 @@
                 <DashboardIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
         </SidebarLink>
-        <SidebarLink  
+        <SidebarLink
+            v-if="permission('financial.read')"  
             :to="{ name: 'Blank' }"
              title="Financeiro" 
              :active="isCurrentRoute('Blank')"
@@ -24,6 +26,7 @@
         </SidebarLink>
 
         <SidebarLink  
+            v-if="permission('service.read')"  
             :to="{ name: 'Blank' }"
              title="Serviços" 
              :active="isCurrentRoute('Blank')"
@@ -43,6 +46,7 @@
             />
         </SidebarCollapsible> -->
         <SidebarLink  
+            v-if="permission('product.read')"  
             :to="{ name: 'Blank' }"
              title="Produtos" 
              :active="isCurrentRoute('Blank')"
@@ -52,6 +56,7 @@
             </template>
         </SidebarLink>
         <SidebarLink  
+            v-if="permission('report.read')"  
             :to="{ name: 'Blank' }"
              title="Relatorios" 
              :active="isCurrentRoute('Blank')"
@@ -61,6 +66,7 @@
             </template>
         </SidebarLink>
         <SidebarLink  
+            v-if="permission('document.read')"  
             :to="{ name: 'Blank' }"
              title="Documentos" 
              :active="isCurrentRoute('Blank')"
@@ -70,6 +76,7 @@
             </template>
         </SidebarLink>
         <SidebarLink  
+            v-if="permission('document.read')"  
             :to="{ name: 'Blank' }"
              title="Receituario" 
              :active="isCurrentRoute('Blank')"
@@ -79,6 +86,7 @@
             </template>
         </SidebarLink>
         <SidebarLink  
+            v-if="permission('customer.read')"  
             :to="{ name: 'Blank' }" 
             title="Clientes" 
             :active="isCurrentRoute('Blank')"
@@ -88,6 +96,7 @@
             </template>
         </SidebarLink>
         <SidebarLink  
+            v-if="permission('calender.read')"  
             :to="{ name: 'Blank' }"
              title="Calendario" 
              :active="isCurrentRoute('Blank')"
@@ -97,6 +106,7 @@
             </template>
         </SidebarLink>
         <SidebarLink  
+            v-if="permission('chat.read')"  
             :to="{ name: 'Blank' }"
              title="Chat" 
              :active="isCurrentRoute('Blank')"
@@ -106,6 +116,7 @@
             </template>
         </SidebarLink>
         <SidebarLink  
+            v-if="permission('user.read')"  
             :to="{ name: 'User' }"
              title="Usuários" 
              :active="isCurrentRoute('User')"
@@ -127,6 +138,20 @@
         </SidebarCollapsible>
     </PerfrectScrollbar>
 </template>
+
+<script>
+import { mapGetters } from 'vuex'
+
+export default {
+    
+    computed: {
+        ...mapGetters([
+            'permission',
+        ])
+    }
+
+}
+</script>
 
 <script setup>
 import { useRouter } from 'vue-router'

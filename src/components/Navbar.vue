@@ -66,7 +66,7 @@
                     </button>
                 </template>
                 <template #content>
-                    <DropdownLink to="#">Log Out</DropdownLink>
+                    <DropdownLink to="#" @click="logOut()">Sair</DropdownLink>
                 </template>
             </Dropdown>
         </div>
@@ -104,6 +104,18 @@
         </Button>
     </div>
 </template>
+
+<script>
+
+
+export default {
+    methods: {
+        logOut(){
+            this.$store.dispatch("logoutRequest").catch(function (err) {});
+        }
+    }
+}
+</script>
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue'

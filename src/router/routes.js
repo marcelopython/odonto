@@ -1,3 +1,38 @@
+import store from '@/store/index'
+import Cookie from 'js-cookie'
+import Client from '@/services/Client'
+const client = new Client()
+
+function authentication(to, from, next) {
+ 
+  if (Cookie.get('isLogged')) {
+    
+    if(!Cookie.get('roles')){
+      return next(`/${window.location.search}login`)
+    }
+
+    const roleData = JSON.parse(Cookie.get('roles'));
+
+    let role = roleData.find((item)=>{
+      let data = item.name.split('.');
+      let view = data[0];
+      let permission = data[1];
+      if(view[0].toUpperCase()+view.substr(1) == to.name && permission === to.meta.permission){
+        return item;
+      }
+    });
+
+    if(!role){
+      return next(`/${window.location.search}`+from.fullPath.substr(1))
+    }
+    
+    return next()
+  }
+
+  return next(`/${window.location.search}login`)
+}
+
+
 export default [
   // {
   //   path: '/',
@@ -11,24 +46,28 @@ export default [
       {
         path: '/dashboard',
         name: 'Dashboard',
+        meta: {permission: 'read'},
         component: () => import('@/views/Dashboard.vue'),
+        beforeEnter: authentication,
       },
       {
         path: '/pages/blank',
         name: 'Blank',
         component: () => import('@/views/pages/Blank.vue'),
+        
       },
       {
         path: '/pages/User',
         name: 'User',
+        meta: {permission: 'read'},
         component: () => import('@/views/pages/User.vue'),
+        beforeEnter: authentication,
       },
     ],
   },
   {
     path: '/',
     beforeEnter: (to, from, next) => {
-      console.log(to)
       return next();
     },
     name: 'Auth',
