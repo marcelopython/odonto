@@ -80,6 +80,7 @@
 import Client from '@/services/Client'
 const client = new Client()
 import Cookie from 'js-cookie'
+import { warnToast, successToast, errorToast } from '@/toast'
 
 export default {
   inheritAttrs: false,
@@ -95,10 +96,10 @@ export default {
   },
   methods: {
     login() {
+                
       client
         .postLogin('/login', { username: this.loginForm.email, password: this.loginForm.password })
         .then((response) => {
-          console.log(response)
           if (!response.error) {
             Cookie.set('access_token', response.access_token)
             Cookie.set('isLogged', true)
@@ -108,21 +109,31 @@ export default {
             this.$store.state.isLogged = true
             this.$store.state.access_token = response.access_token
             this.$router.push('/dashboard')
+            successToast({
+                text: 'Logado com sucesso.',
+                title: 'Login'
+            })
             return true
           }
-          // window.notify({ text: response.error, theme: 'red' })
+          errorToast({
+             text: 'Usuário ou senha invalido.',
+             title: 'Login'
+          })
         })
         .catch((e) => {
           console.log(e)
-          // window.notify({ text: 'Falha inesperada.', theme: 'red' })
+          errorToast({
+            text: 'Falha inesperada.',
+            title: 'Falha'
+          })
         })
     },
   },
-  mounted() {
-    if(this.$store.state.isLogged){
-        this.$router.push('/dashboard')
+    mounted() {
+        if(this.$store.state.isLogged){
+            this.$router.push('/dashboard')
+        }
     }
-  }
 }
 </script>
 

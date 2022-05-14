@@ -34,11 +34,11 @@ function authentication(to, from, next) {
 
 
 export default [
-  // {
-  //   path: '/',
-  //   name: 'Home',
-  //   component: () => import('@/views/Index'),
-  // },
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import('@/views/Index'),
+  },
   {
     path: '/dashboard',
     component: () => import('@/layouts/DashboardLayout.vue'),
@@ -51,13 +51,12 @@ export default [
         beforeEnter: authentication,
       },
       {
-        path: '/pages/blank',
+        path: '/blank',
         name: 'Blank',
         component: () => import('@/views/pages/Blank.vue'),
-        
       },
       {
-        path: '/pages/User',
+        path: '/User',
         name: 'User',
         meta: {permission: 'read'},
         component: () => import('@/views/pages/User.vue'),
