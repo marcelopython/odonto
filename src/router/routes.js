@@ -18,6 +18,11 @@ export default [
         name: 'Blank',
         component: () => import('@/views/pages/Blank.vue'),
       },
+      {
+        path: '/pages/User',
+        name: 'User',
+        component: () => import('@/views/pages/User.vue'),
+      },
     ],
   },
   {
