@@ -1,4 +1,3 @@
-import store from '@/store/index'
 import Cookie from 'js-cookie'
 import Client from '@/services/Client'
 const client = new Client()

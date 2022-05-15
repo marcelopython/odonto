@@ -8,6 +8,8 @@ import { gsap } from 'gsap'
 import Cookie from 'js-cookie'
 import Client from '@/services/Client'
 const client = new Client()
+import 'flowbite';
+import '@/assets/css/main.css'
 
 export default {
   mounted() {

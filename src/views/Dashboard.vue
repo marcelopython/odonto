@@ -3,7 +3,7 @@
         <template #header>
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <h2 class="text-xl font-semibold leading-tight">Dashboard</h2>
-                <Button
+                <!-- <Button
                     target="_blank"
                     href="https://github.com/kamona-ui/kui-dashboard-vue"
                     variant="black"
@@ -12,7 +12,8 @@
                 >
                     <GithubIcon aria-hidden="true" :class="iconSizeClasses" />
                     <span>Star on Github</span>
-                </Button>
+                </Button> -->
+                
             </div>
         </template>
 

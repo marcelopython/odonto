@@ -2,7 +2,8 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   darkMode: 'class',
-  content: ['./index.html', './src/**/*.{js,jsx,vue}'],
+  content: [    "./index.html",
+  "./src/**/*.{vue,js,ts,jsx,tsx}",  "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
       fontFamily: {
@@ -24,7 +25,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
-
+    require('flowbite/plugin'),
     // TODO: use `https://github.com/Kamona-WD/tailwindcss-perspective` package when it support tailwindcss v3.
     require('./tailwindcss-perspective'),
   ],
