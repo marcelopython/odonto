@@ -100,7 +100,6 @@ export default {
       client
         .postLogin('/login', { username: this.loginForm.email, password: this.loginForm.password })
         .then((response) => {
-            console.log(response)
           if (!response.error) {
             Cookie.set('access_token', response.access_token)
             Cookie.set('isLogged', true)
