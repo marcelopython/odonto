@@ -6,7 +6,7 @@
     role="tabpanel"
     aria-labelledby="settings-tab-example"
   >
-    <Buttons :class="' float-right mb-3'" @click="openModalFormPermission('modal-create-permission')">
+    <Buttons :class="' float-right mb-3'" @click="openModal">
       Cadastar Grupo de permissão
     </Buttons>
     <table width="100%" cellpadding="5" class="base-table">
@@ -29,8 +29,12 @@
         </tr>
       </tbody>
     </table>
-
     <Pagination @changePage="settings" :links="permissionGroup.links" />
+    <ModalPermission 
+      :isOpen="isOpen"
+      @createPermission="settings"
+      @modalHide="modalHide"
+    />
   </div>
 </template>
 
@@ -40,13 +44,31 @@ const client = new Client()
 import moment from 'moment'
 import Buttons from '@/components/Button.vue'
 import Pagination from '@/components/base/Pagination.vue'
+import ModalPermission from '@/components/pages/user/ModalPermission.vue'
 import { warnToast, successToast, errorToast } from '@/toast'
+import { mapGetters } from 'vuex'
+import { sidebarState } from '@/composables'
 
 export default {
+  props: {
+    load: {
+      default: false
+    }
+  },
   data() {
     return {
       permissionGroup: [],
-      dataClassModal: null,
+      isOpen: false
+    }
+  },
+  computed: {
+    ...mapGetters(['permission']),
+  },
+  watch: {
+    load: function(){
+      if(this.load){
+        this.settings()
+      }
     }
   },
   components: {
@@ -54,46 +76,15 @@ export default {
     Pagination,
   },
   methods: {
-    async storePermission() {
-      try {
-        if (!this.permissionSelected[0]) {
-          warnToast({
-            text: 'Permissão e obrigatório!',
-            title: 'Permissão',
-          })
-          return false
-        }
-        if (!this.nameGroupPermission) {
-          return warnToast({
-            text: 'Nome do grupo e obrigatório!',
-            title: 'Permissão',
-          })
-        }
-        this.disabledBtn = true
-        let roles = await client.post('permission-group', {
-          permissions: this.permissionSelected,
-          name: this.nameGroupPermission,
-        })
-
-        if (roles.data && roles.data.id) {
-          this.settings()
-          this.modalHide()
-          this.disabledBtn = false
-          return successToast({
-            text: 'Grupo de permissão configurado com sucesso!',
-            title: 'Permissão',
-          })
-        }
-        errorToast({
-          text: 'Ocorreu uma falha ao cadastrar grupo de permissão',
-          title: 'Permissão',
-        })
-      } catch (e) {
-        console.log(e)
-      }
+    modalHide(){
+      this.isOpen = false
+    },
+    openModal(){
+      this.isOpen = true
     },
     async settings(link = null) {
       try {
+        this.isOpen = false
         let linkPage = ''
         if (!link) {
           linkPage = 'permission-group'
@@ -101,6 +92,7 @@ export default {
           linkPage = 'permission-group?page=' + link.url.split('?page=')[1]
         }
         let permissionG = await client.get(linkPage)
+        console.log('permissionG==>', permissionG)
         this.permissionGroup = permissionG.data
       } catch (e) {
         console.log(e)
@@ -108,6 +100,14 @@ export default {
     }
   },
 }
+</script>
+<script setup>
+// import PageWrapper from '@/components/PageWrapper.vue'
+// import { onMounted, ref } from 'vue'
+// import BaseCard from '@/components/BaseCard.vue'
+// import Button from '@/components/Button.vue'
+// import ApexCharts from 'apexcharts'
+// import { ChartBarIcon, TrendingUpIcon, TrendingDownIcon, MinusIcon } from '@heroicons/vue/outline'
 </script>
 
 <style scoped>
