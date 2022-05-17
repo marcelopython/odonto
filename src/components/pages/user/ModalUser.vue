@@ -297,6 +297,7 @@ export default {
       if(!this.validation()){
         return false;
       }
+      this.disabledBtn = true
       
       if(!this.userEdit.id){
         return await this.createUser()
@@ -307,7 +308,6 @@ export default {
     async createUser() {
       try {
 
-        this.disabledBtn = true
 
         let response = await client.post('user/register', this.user)
 

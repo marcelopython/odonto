@@ -16,7 +16,7 @@
           <th>Nome</th>
           <th>Usuários</th>
           <th v-if="sidebarState.isOpen">Data Atualização</th>
-          <th v-if="sidebarState.isOpen">Editar</th>
+          <th v-if="(this.permission('permission-group.update') || this.permission('permission-group.delete')) && sidebarState.isOpen">Editar</th>
         </tr>
       </thead>
       <tbody>
@@ -25,8 +25,11 @@
           <td>{{ permission.name }}</td>
           <td>{{ permission.total }}</td>
           <td v-if="sidebarState.isOpen">{{ moment(permission.updated_at).format('DD/MM/YYYY') }}</td>
-          <td>
-            <Dropdown align="right" width="48" v-if="!permission.default">
+          <td
+          v-if="(this.permission('permission-group.update') || this.permission('permission-group.delete'))"
+          >
+            <Dropdown align="right" width="48" 
+              v-if="!permission.default">
               <template #trigger>
                     <button
                         class="flex text-sm transition border-2 border-transparent rounded-md focus:outline-none focus:ring focus:ring-purple-500 focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark-eval-1"
@@ -35,11 +38,15 @@
                     </button>
                 </template>
                 <template #content>
-                    <button style="display: flex; padding: 10px" @click="edit(permission)">
+                    <button 
+                    v-if="this.permission('permission-group.update')"
+                    style="display: flex; padding: 10px" @click="edit(permission)">
                       <PencilIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
                       <span style="margin-left: 5px">Editar</span>
                     </button>
-                    <button style="display: flex; padding: 10px">
+                    <button 
+                    v-if="this.permission('permission-group.delete')"
+                    style="display: flex; padding: 10px">
                       <FolderRemoveIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
                       <span style="margin-left: 5px">Remover</span>
                     </button>
