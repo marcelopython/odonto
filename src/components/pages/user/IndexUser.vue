@@ -21,7 +21,8 @@
           <th>Nome</th>
           <th>Email</th>
           <th>Telefone</th>
-          <th>Visualizar</th>
+          <th>Grupo</th>
+          <th v-if="permission('user.update')">Ação</th>
         </tr>
       </thead>
       <tbody>
@@ -31,18 +32,26 @@
         >
           <td>{{user.id}}</td>
           <td>{{user.first_name}} {{user.last_name}}</td>
-          <td>{{user.phone}}</td>
+          <td>{{user.phone}}</td> 
           <td>{{user.email}}</td>
-          <td></td>
+          <td>{{user.permission_group}}</td>      
+          <td v-if="permission('user.update')">
+            <button @click="editUser(user)">
+              <PencilIcon style="width:25px"/>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
+
     <Pagination @changePage="users" :links="usersData.links" />
 
     <ModalUser
       :isOpen="isOpen"
       @createUser="users"
       @modalHide="modalHide"
+      @updateUser="users"
+      :userEdit="userData"
     />
   </div>
 </template>
@@ -65,12 +74,12 @@ export default {
   data() {
     return {
       usersData: [],
-      isOpen: false
+      isOpen: false,
+      userData: {}
     }
   },
   watch: {
     load: function(){
-      console.log('this.load', this.load)
       if(this.load){
         this.users()
       }
@@ -83,11 +92,18 @@ export default {
     ...mapGetters(['permission']),
   },
   methods: {
+    editUser(userData){
+      this.openModal()
+      this.userData = userData 
+    },
     openModal(){
       this.isOpen = true;
+      this.userData = {}
     },
     modalHide(){
       this.isOpen = false
+      this.edit = false
+      this.userData = {}
     },
     async users() {
       try{
@@ -107,7 +123,7 @@ export default {
 // import BaseCard from '@/components/BaseCard.vue'
 // import Button from '@/components/Button.vue'
 // import ApexCharts from 'apexcharts'
-// import { ChartBarIcon, TrendingUpIcon, TrendingDownIcon, MinusIcon } from '@heroicons/vue/outline'
+import { PencilIcon } from '@heroicons/vue/outline'
 </script>
 
 <style scoped>

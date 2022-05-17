@@ -6,6 +6,7 @@ import Toast from 'vue-toastification'
 import 'flowbite';
 import '@/index.css'
 import store from './store/index'
+import './services/handleErrors.js'
 
 const app = createApp(App)
 

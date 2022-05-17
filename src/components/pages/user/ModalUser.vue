@@ -2,11 +2,8 @@
       <BaseModal
         size="smal"
         :id="this.idModal"
-        @modalHide="modalHide"
-        @create="createUser"
-        :disabledBtn="disabledBtn"
-        :title="'Cadastro de usuário'"
-        v-if="permission('user.create')"
+        :title=" userEdit.id ? 'Atualizar usuário' : 'Cadastrar usuário'"
+        v-if="permission(permissionUser)"
       >
         <template #body>
           <form>
@@ -100,6 +97,7 @@
             <div class="mb-6">
               <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-mail</label>
               <input
+                :disabled="userEdit.id??false"
                 v-model="user.email"
                 type="email"
                 id="email"
@@ -122,6 +120,33 @@
                 placeholder="john.doe@company.com"
                 required
               />
+            </div>
+            <div class="mb-6">
+              <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Grupo de permissão</label
+              >
+              <select
+                v-model="user.permission_group_id"
+                class="
+                  bg-gray-50
+                  border border-gray-300
+                  text-gray-900 text-sm
+                  rounded-lg
+                  focus:ring-blue-500 focus:border-blue-500
+                  block
+                  w-full
+                  p-2.5
+                  dark:bg-gray-700
+                  dark:border-gray-600
+                  dark:placeholder-gray-400
+                  dark:text-white
+                  dark:focus:ring-blue-500
+                  dark:focus:border-blue-500
+                "
+                required
+              >
+                <option v-for="group in permissionGroup" :key="group.id" :value="group.id">{{ group.name }}</option>
+              </select>
             </div>
             <div class="mb-6">
               <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
@@ -180,35 +205,32 @@
                 required
               />
             </div>
-            <div class="mb-6">
-              <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >Grupo de permissão</label
-              >
-              <select
-                v-model="user.permission_group_id"
-                class="
-                  bg-gray-50
-                  border border-gray-300
-                  text-gray-900 text-sm
-                  rounded-lg
-                  focus:ring-blue-500 focus:border-blue-500
-                  block
-                  w-full
-                  p-2.5
-                  dark:bg-gray-700
-                  dark:border-gray-600
-                  dark:placeholder-gray-400
-                  dark:text-white
-                  dark:focus:ring-blue-500
-                  dark:focus:border-blue-500
-                "
-                required
-              >
-                <option v-for="group in permissionGroup" :key="group.id" :value="group.id">{{ group.name }}</option>
-              </select>
-            </div>
+            
           </form>
         </template>
+
+        <template #footer>
+          <!-- Modal footer -->
+          <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+              <button 
+                :disabled="disabledBtn"
+                @click="createOrUpdate"
+                data-modal-toggle="extralarge-modal"
+                type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                {{ userEdit.id ? 'Atualizar' : 'Cadastrar' }}
+              </button>
+              <button 
+                @click="modalHide"
+                data-modal-toggle="extralarge-modal"
+                type="button"
+                class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                Voltar
+              </button>
+          </div>
+        </template>
+
       </BaseModal>
 </template>
 <script>
@@ -223,6 +245,9 @@ export default {
   props:{
     isOpen:{
       default: false
+    },
+    userEdit:{
+      default: null
     }
   },
   data() {
@@ -247,6 +272,11 @@ export default {
       if(this.isOpen){
         this.openModal()
       }
+    },
+    userEdit: function(){
+      if(this.userEdit){
+        this.user = this.userEdit;
+      }
     }
   },
   components: {
@@ -254,42 +284,29 @@ export default {
   },
   computed: {
     ...mapGetters(['permission']),
+    permissionUser(){
+      if(this.userEdit){
+        return 'user.update'
+      }
+      return 'user.create'
+    }
   },
   methods: {
+    async createOrUpdate(){
+        
+      if(!this.validation()){
+        return false;
+      }
+      
+      if(!this.userEdit){
+        return await this.createUser()
+      }
+      return await this.updateUser()
+
+    },
     async createUser() {
       try {
-        if (!this.user['first_name']) {
-          return errorToast({
-            text: 'Obrigatório informar o nome!',
-            title: 'Usuário',
-          })
-        } else if (!this.user['email']) {
-          return errorToast({
-            text: 'Obrigatorio informar o E-mail!',
-            title: 'Usuário',
-          })
-        } else if (!this.user['password']) {
-          return errorToast({
-            text: 'Obrigatório informar a senha!',
-            title: 'Usuário',
-          })
-        }else if(this.user['password'].length < 8){
-          return errorToast({
-            text: 'Senha muito curta!',
-            title: 'Usuário',
-          })
-        }
-         else if (this.user['password'] !== this.user['confirm_password']) {
-          return errorToast({
-            text: 'Senhas não conferem!',
-            title: 'Usuário',
-          })
-        } else if (!this.user['permission_group_id']) {
-          return errorToast({
-            text: 'Obrigatório informar o grupo de permissão!',
-            title: 'Usuário',
-          })
-        }
+
         this.disabledBtn = true
 
         let response = await client.post('user/register', this.user)
@@ -310,8 +327,81 @@ export default {
         })
       } catch (e) {
         this.disabledBtn = false
+      }
+    },
+    async updateUser() {
+      try {
+        this.disabledBtn = true
+        let response = await client.put('user/'+this.user.id, {...this.user, email: ''})
+
+        this.disabledBtn = false
+        if (response.data.id) {
+          this.modalHide()
+          this.$emit('updateUser', response.data)
+          return successToast({
+            text: 'Usuário atualizado com sucesso!',
+            title: 'Usuário',
+          })
+        }
+
+        return errorToast({
+          text: 'Falha ao atualizar usuário!',
+          title: 'Usuário',
+        })
+      } catch (e) {
+        this.disabledBtn = false
         console.log(e)
       }
+    },
+    validationPassword(){
+
+        if(this.userEdit && !this.user['password'] && !this.user['confirm_password']){
+          return true;
+        }
+
+        if (!this.user['password']) {
+          errorToast({
+            text: 'Obrigatório informar a senha!',
+            title: 'Usuário',
+          })
+          return false
+        }else if(this.user['password'].length < 8){
+          errorToast({
+            text: 'Senha muito curta!',
+            title: 'Usuário',
+          })
+          return false
+        }else if (this.user['password'] !== this.user['confirm_password']) {
+          errorToast({
+            text: 'Senhas não conferem!',
+            title: 'Usuário',
+          })
+          return false
+        }
+    },
+    validation(){
+        if (!this.user['first_name']) {
+          errorToast({
+            text: 'Obrigatório informar o nome!',
+            title: 'Usuário',
+          })
+          return false
+        } else if (!this.user['email']) {
+          errorToast({
+            text: 'Obrigatorio informar o E-mail!',
+            title: 'Usuário',
+          })
+          return false
+        }else if (!this.user['permission_group_id']) {
+          errorToast({
+            text: 'Obrigatório informar o grupo de permissão!',
+            title: 'Usuário',
+          })
+          return false
+        }else if(!this.validationPassword()){
+          return false
+        }
+        return true;
     },
     async getPermissionGroup() {
       try {
@@ -335,10 +425,8 @@ export default {
           
         },
         onShow: () => {
-          console.log('modal is shown')
         },
         onToggle: () => {
-          console.log('modal has been toggled')
         },
       }
       return new Modal(targetEl, options)
