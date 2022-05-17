@@ -49,7 +49,13 @@
               v-for="permission in role"
               :key="permission.id"
             >
-              <input type="checkbox" @change="checkPermission" :value="permission.id" :id="'toggle' + permission.id" class="sr-only peer" />
+              <input type="checkbox" 
+                @change="checkPermission"
+                :value="permission.id" 
+                :id="'toggle' + permission.id"
+                class="sr-only peer checkbox-permission" 
+                :checked="arrayRole.find(item=>item.role_id == permission.id)"
+              />
               <div
                 class="
                   w-11
@@ -102,6 +108,9 @@ export default {
   props:{
     isOpen: {
       default: false
+    },
+    edit: {
+      default: {}
     }
   },
   data() {
@@ -112,13 +121,20 @@ export default {
       roles: {},
       permissionSelected: [],
       nameGroupPermission: '',
-      disabledBtn: false
+      disabledBtn: false,
+      groupRole: [],
+      arrayRole:[]
     }
   },
   watch: {
     isOpen: function(){
-      console.log(this.isOpen)
+      this.arrayRole = []
+      this.groupRole = []
+      this.permissionSelected = []
       if(this.isOpen){
+        if(this.edit.id){
+          this.findRole()
+        }
         this.openModalFormPermission(this.idModal)
       }
     }
@@ -148,6 +164,32 @@ export default {
     },
   },
   methods: {
+    setCheck(role){
+
+      let item = document.getElementsByClassName('checkbox-permission');
+
+      role = Object.values(role);
+      this.arrayRole = role;
+      [...item].forEach(data => {
+
+        if(role.find(item=>item.role_id == data.value)){
+          this.permissionSelected.push({'role_id': data.value})
+        }
+      })
+
+      console.log( 'this.permissionSelected', this.permissionSelected)
+    },
+    async findRole(){
+      try{
+         let roles = await client.get('permission-group/'+this.edit.id)
+         this.nameGroupPermission = roles.data.name
+          this.groupRole = roles.data.group_role 
+          this.setCheck(this.groupRole)
+
+      }catch(e){
+        console.log(e)
+      }
+    },
     async storePermission(){
       try {        
 
@@ -219,8 +261,6 @@ export default {
         })
 
         this.roles = data
-
-        console.log(this.roles)
       } catch (e) {
         console.log(e)
       }

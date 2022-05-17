@@ -274,7 +274,7 @@ export default {
       }
     },
     userEdit: function(){
-      if(this.userEdit){
+      if(this.userEdit.id){
         this.user = this.userEdit;
       }
     }
@@ -293,12 +293,12 @@ export default {
   },
   methods: {
     async createOrUpdate(){
-        
+ 
       if(!this.validation()){
         return false;
       }
       
-      if(!this.userEdit){
+      if(!this.userEdit.id){
         return await this.createUser()
       }
       return await this.updateUser()
@@ -355,7 +355,7 @@ export default {
     },
     validationPassword(){
 
-        if(this.userEdit && !this.user['password'] && !this.user['confirm_password']){
+        if(this.userEdit.id && !this.user['password'] && !this.user['confirm_password']){
           return true;
         }
 
@@ -378,6 +378,7 @@ export default {
           })
           return false
         }
+        return true
     },
     validation(){
         if (!this.user['first_name']) {

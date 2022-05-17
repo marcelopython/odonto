@@ -16,7 +16,7 @@
           <th>Nome</th>
           <th>Usuários</th>
           <th v-if="sidebarState.isOpen">Data Atualização</th>
-          <th v-if="sidebarState.isOpen">Visualizar</th>
+          <th v-if="sidebarState.isOpen">Editar</th>
         </tr>
       </thead>
       <tbody>
@@ -25,13 +25,34 @@
           <td>{{ permission.name }}</td>
           <td>{{ permission.total }}</td>
           <td v-if="sidebarState.isOpen">{{ moment(permission.updated_at).format('DD/MM/YYYY') }}</td>
-          <td></td>
+          <td>
+            <Dropdown align="right" width="48" v-if="!permission.default">
+              <template #trigger>
+                    <button
+                        class="flex text-sm transition border-2 border-transparent rounded-md focus:outline-none focus:ring focus:ring-purple-500 focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark-eval-1"
+                    >
+                      <DotsHorizontalIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+                    </button>
+                </template>
+                <template #content>
+                    <button style="display: flex; padding: 10px" @click="edit(permission)">
+                      <PencilIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+                      <span style="margin-left: 5px">Editar</span>
+                    </button>
+                    <button style="display: flex; padding: 10px">
+                      <FolderRemoveIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+                      <span style="margin-left: 5px">Remover</span>
+                    </button>
+                </template>
+            </Dropdown>
+          </td>
         </tr>
       </tbody>
     </table>
     <Pagination @changePage="settings" :links="permissionGroup.links" />
     <ModalPermission 
       :isOpen="isOpen"
+      :edit="permissionEdit"
       @createPermission="settings"
       @modalHide="modalHide"
     />
@@ -48,6 +69,8 @@ import ModalPermission from '@/components/pages/user/ModalPermission.vue'
 import { warnToast, successToast, errorToast } from '@/toast'
 import { mapGetters } from 'vuex'
 import { sidebarState } from '@/composables'
+import Dropdown from '@/components/Dropdown.vue'
+import { DotsHorizontalIcon, PencilIcon, FolderRemoveIcon } from '@heroicons/vue/outline'
 
 export default {
   props: {
@@ -58,7 +81,8 @@ export default {
   data() {
     return {
       permissionGroup: [],
-      isOpen: false
+      isOpen: false,
+      permissionEdit: {}
     }
   },
   computed: {
@@ -76,11 +100,17 @@ export default {
     Pagination,
   },
   methods: {
+    edit(permission){
+      console.log(permission)
+      this.openModal()
+      this.permissionEdit = permission
+    },
     modalHide(){
       this.isOpen = false
     },
     openModal(){
       this.isOpen = true
+      this.permissionEdit = {}
     },
     async settings(link = null) {
       try {
@@ -92,7 +122,6 @@ export default {
           linkPage = 'permission-group?page=' + link.url.split('?page=')[1]
         }
         let permissionG = await client.get(linkPage)
-        console.log('permissionG==>', permissionG)
         this.permissionGroup = permissionG.data
       } catch (e) {
         console.log(e)
