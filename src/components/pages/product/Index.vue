@@ -6,7 +6,7 @@
     aria-labelledby="product-tab-"
   >
     <div v-if="!isEdit">
-      <div style="display: block" class="h-20">
+      <div style="display: block" class="h-20" v-if="permission('user.create')">
         <Buttons :class="' float-right mb-3'" @click="isEdit = !isEdit"> Cadastar Produto </Buttons>
       </div>
       <div :style="styleContentProduct">
@@ -17,7 +17,12 @@
           :key="product.id"
         >
           <a href="#">
-            <img class="rounded-t-lg" src="https://flowbite.com/docs/images/blog/image-1.jpg" alt="" />
+
+            <img class="rounded-t-lg" 
+              :src="product.image ? product.image.link.link : 'https://flowbite.com/docs/images/blog/image-1.jpg'"
+              alt="" 
+            />
+            
           </a>
           <div class="p-5">
             <a href="#">
@@ -53,6 +58,7 @@ import CreateOrUpdate from '@/components/pages/product/CreateOrUpdate.vue'
 import Client from '@/services/Client'
 const client = new Client()
 import Pagination from '@/components/base/Pagination.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -80,6 +86,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['permission']),
     styleContentProduct: function () {
       if (!this.isMobile) {
         return 'display: block; text-align: center;'
@@ -95,6 +102,7 @@ export default {
   },
   methods: {
     async index(link = null) {
+      
       try {
         let linkPage = ''
         if (!link) {

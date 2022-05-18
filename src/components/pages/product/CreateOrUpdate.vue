@@ -147,8 +147,15 @@
         </label>
       </div>
     </div>
+
+    <img id='Img1' src=''>
+
     <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="user_avatar">Imagem</label>
-    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help" id="user_avatar" type="file">
+    <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg 
+      cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+       aria-describedby="user_avatar_help" id="user_avatar" type="file"
+        @change="selectedImg" 
+      >
     <div class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="user_avatar_help">
       Selecione a imagem do seu produto.
     </div>
@@ -202,13 +209,32 @@ export default {
         total_stock: null,
         total_stock_min: null,
         stock_alert: null,
+        image: {
+          data: null,
+          extension: null
+        }
       },
     }
   },
   watch: {},
-  computed: {},
+  computed: {
+
+  },
   methods: {
+    selectedImg(event){
+        let imageFile = event.target.files[0];
+        let fileReader = new FileReader();
+        fileReader.onload = (fileLoadedEvent) => {
+          let srcData = fileLoadedEvent.target.result;
+          this.data.image.data = srcData
+          this.data.image.extension = imageFile.type.split('/')[1]
+          let newImage = document.getElementById('Img1');
+          newImage.src = srcData;
+        }
+        fileReader.readAsDataURL(imageFile);
+    },
     validation(){
+
       if(!this.data.name){
           warnToast({
             text: 'Nome do produto e obrigatório!',

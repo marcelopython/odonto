@@ -107,7 +107,6 @@ export default {
   },
   methods: {
     edit(permission){
-      console.log(permission)
       this.openModal()
       this.permissionEdit = permission
     },
