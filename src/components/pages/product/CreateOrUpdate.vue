@@ -182,6 +182,7 @@
 import Buttons from '@/components/Button.vue'
 import Client from '@/services/Client'
 const client = new Client()
+import { warnToast, successToast, errorToast } from '@/toast'
 
 export default {
   props: {
@@ -207,7 +208,44 @@ export default {
   watch: {},
   computed: {},
   methods: {
+    validation(){
+      if(!this.data.name){
+          warnToast({
+            text: 'Nome do produto e obrigatório!',
+            title: 'Produto'
+          })
+          return false
+        }else if(!this.data.description){
+          warnToast({
+            text: 'Descrição do produto e obrigatório!',
+            title: 'Produto'
+          })
+          return false
+        }else if(!this.data.description){
+          warnToast({
+            text: 'Valor do produto e obrigatório!',
+            title: 'Produto'
+          })
+          return false
+        }else if(!this.data.total_stock_min){
+          warnToast({
+            text: 'Informe a quantidade mínima de produto!',
+            title: 'Produto'
+          })
+          return false
+        }else if(!this.data.total_stock){
+          warnToast({
+            text: 'Informe a quantidade de items!',
+            title: 'Produto'
+          })
+          return false
+        }
+      return true;
+    },
     createOrUpdate(){
+      if(!this.validation()){
+        return false;
+      }
       this.create()
       this.$emit('createOrUpdate')
     },
@@ -215,7 +253,13 @@ export default {
       try{
         
         let response = await client.post('product', this.data);
-        console.log(response)
+
+        if(response.data.id){
+          successToast({
+            text: 'Produto cadastrado com sucesso.',
+            title: 'Produto'
+          })
+        }
 
       }catch(e){
         console.log(e)

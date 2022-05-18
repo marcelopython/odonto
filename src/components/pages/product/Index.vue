@@ -12,7 +12,7 @@
       <div :style="styleContentProduct">
         <div
           class="m-5 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
-          :style="!isMobile ? 'width: 25%;     display: inline-block;' : ''"
+          :style="!isMobile ? 'width: 25%; display: inline-block;' : ''"
           v-for="product in products.data "
           :key="product.id"
         >
@@ -21,7 +21,7 @@
           </a>
           <div class="p-5">
             <a href="#">
-              <h6 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+              <h6 class="mb-2 text-1xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {{product.name}}  
               </h6>
             </a>
@@ -36,6 +36,9 @@
           </div>
         </div>
       </div>
+
+      <Pagination @changePage="index" :links="products.links" />
+
     </div>
     <div v-else>
       <CreateOrUpdate @createOrUpdate="createOrUpdate" @cancel="cancel" />
@@ -49,6 +52,7 @@ import { sidebarState } from '@/composables'
 import CreateOrUpdate from '@/components/pages/product/CreateOrUpdate.vue'
 import Client from '@/services/Client'
 const client = new Client()
+import Pagination from '@/components/base/Pagination.vue'
 
 export default {
   props: {
@@ -59,6 +63,7 @@ export default {
   components: {
     Buttons,
     CreateOrUpdate,
+    Pagination
   },
   data() {
     return {
@@ -89,9 +94,16 @@ export default {
     },
   },
   methods: {
-    async index() {
+    async index(link = null) {
       try {
-        let response = await client.get('product')
+        let linkPage = ''
+        if (!link) {
+          linkPage = 'product'
+        } else {
+          linkPage = 'product?page=' + link.url.split('?page=')[1]
+        }
+
+        let response = await client.get(linkPage)
         this.products = response.data
         console.log('response', response)
       } catch (e) {
