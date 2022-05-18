@@ -61,6 +61,13 @@ export default [
         component: () => import('@/views/pages/User.vue'),
         beforeEnter: authentication,
       },
+      {
+        path: '/produto',
+        name: 'Product',
+        meta: {permission: 'read'},
+        component: () => import('@/views/pages/Product.vue'),
+        beforeEnter: authentication,
+      },
     ],
   },
   {

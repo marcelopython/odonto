@@ -47,12 +47,12 @@
         </SidebarCollapsible> -->
         <SidebarLink  
             v-if="permission('product.read')"  
-            :to="{ name: 'Blank' }"
+            :to="{ name: 'Product' }"
              title="Produtos" 
-             :active="isCurrentRoute('Blank')"
+             :active="isCurrentRoute('Product')"
              >
             <template #icon>
-                <PlusIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+            <InboxIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true"/>
             </template>
         </SidebarLink>
         <SidebarLink  
@@ -160,7 +160,7 @@ import SidebarLink from '@/components/sidebar/SidebarLink.vue'
 import { DashboardIcon } from '@/components/icons/outline'
 import { ShieldCheckIcon, DocumentIcon, UserCircleIcon,
  UserGroupIcon, CheckIcon, PlusIcon, CurrencyDollarIcon, CalendarIcon
- ,ChatAlt2Icon, ChartBarIcon, DocumentTextIcon
+ ,ChatAlt2Icon, ChartBarIcon, DocumentTextIcon, InboxIcon
  } from '@heroicons/vue/outline'
 import SidebarCollapsible from '@/components/sidebar/SidebarCollapsible.vue'
 import SidebarCollapsibleItem from '@/components/sidebar/SidebarCollapsibleItem.vue'
