@@ -14,7 +14,7 @@
                 <DashboardIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
         </SidebarLink>
-        <SidebarLink
+        <!-- <SidebarLink
             v-if="permission('financial.read')"  
             :to="{ name: 'Blank' }"
              title="Financeiro" 
@@ -23,8 +23,8 @@
             <template #icon>
                 <CurrencyDollarIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
-        </SidebarLink>
-
+        </SidebarLink> -->
+<!-- 
         <SidebarLink  
             v-if="permission('service.read')"  
             :to="{ name: 'Blank' }"
@@ -33,8 +33,8 @@
              >
             <template #icon>
                 <CheckIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-            </template>
-        </SidebarLink>
+            </template> -->
+        <!-- </SidebarLink> -->
         <!-- <SidebarCollapsible title="Pages" :active="isCurrentPath('/pages')">
             <template #icon>
                 <DocumentIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
@@ -45,7 +45,7 @@
                 :active="isCurrentRoute('Blank')"
             />
         </SidebarCollapsible> -->
-        <SidebarLink  
+        <!-- <SidebarLink  
             v-if="permission('product.read')"  
             :to="{ name: 'Product' }"
              title="Produtos" 
@@ -54,8 +54,8 @@
             <template #icon>
             <InboxIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true"/>
             </template>
-        </SidebarLink>
-        <SidebarLink  
+        </SidebarLink> -->
+        <!-- <SidebarLink  
             v-if="permission('report.read')"  
             :to="{ name: 'Blank' }"
              title="Relatorios" 
@@ -74,8 +74,8 @@
             <template #icon>
                 <DocumentTextIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
-        </SidebarLink>
-        <SidebarLink  
+        </SidebarLink> -->
+        <!-- <SidebarLink  
             v-if="permission('document.read')"  
             :to="{ name: 'Blank' }"
              title="Receituario" 
@@ -84,18 +84,18 @@
             <template #icon>
                 <DocumentTextIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
-        </SidebarLink>
+        </SidebarLink> -->
         <SidebarLink  
             v-if="permission('customer.read')"  
-            :to="{ name: 'Blank' }" 
-            title="Clientes" 
-            :active="isCurrentRoute('Blank')"
+            :to="{ name: 'Customer' }" 
+            title="Pacientes" 
+            :active="isCurrentRoute('Customer')"
         >
             <template #icon>
                 <UserGroupIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
         </SidebarLink>
-        <SidebarLink  
+        <!-- <SidebarLink  
             v-if="permission('calender.read')"  
             :to="{ name: 'Blank' }"
              title="Calendario" 
@@ -114,7 +114,7 @@
             <template #icon>
                 <ChatAlt2Icon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
-        </SidebarLink>
+        </SidebarLink> -->
         <SidebarLink  
             v-if="permission('user.read')"  
             :to="{ name: 'User' }"

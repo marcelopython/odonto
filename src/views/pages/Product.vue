@@ -28,7 +28,7 @@
             <span class="ml-1">Produto</span>
           </button>
         </li>
-        <li class="mr-2" role="presentation">
+        <!-- <li class="mr-2" role="presentation">
           <button
             class="
               inline-flex
@@ -48,7 +48,7 @@
             <InboxInIcon class="flex-shrink-0 w-6 h-5" aria-hidden="true" />
             <span class="ml-1">Estoque</span> 
           </button>
-        </li>
+        </li> -->
        
       </ul>
     </div>
@@ -86,11 +86,11 @@ export default {
         triggerEl: document.querySelector('#product-tab-'),
         targetEl: document.querySelector('#product-tab'),
       },
-      {
-        id: 'estoque',
-        triggerEl: document.querySelector('#estoque-tab-'),
-        targetEl: document.querySelector('#estoque-tab'),
-      }
+      // {
+      //   id: 'estoque',
+      //   triggerEl: document.querySelector('#estoque-tab-'),
+      //   targetEl: document.querySelector('#estoque-tab'),
+      // }
     ]
 
     // options with default values

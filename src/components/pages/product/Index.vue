@@ -113,7 +113,7 @@ export default {
 
         let response = await client.get(linkPage)
         this.products = response.data
-        console.log('response', response)
+
       } catch (e) {
         console.log(e)
       }

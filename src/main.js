@@ -7,11 +7,13 @@ import 'flowbite';
 import '@/index.css'
 import store from './store/index'
 import './services/handleErrors.js'
+import VueTheMask from 'vue-the-mask'
+
 
 const app = createApp(App)
 
 app.use(store)
-
+app.use(VueTheMask)
 app.use(router)
 app.use(Toast, {
   hideProgressBar: true,
