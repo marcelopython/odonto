@@ -109,7 +109,6 @@ export default {
       try{
         let response = await client.get('user')
         this.usersData = response.data
-        console.log(this.usersData)
       }catch(e){
         console.log(e)
       }

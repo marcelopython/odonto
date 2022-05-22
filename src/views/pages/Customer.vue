@@ -3,7 +3,6 @@
     <template #header>
       <div class="p-4 sm:p-6">
         <h2 class="text-xl font-semibold leading-tight">Pacientes</h2>
-        <!-- return ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'black'].includes(value) -->
         <Buttons
          variant="info"
          :class="'float-right mb-3'"
@@ -13,7 +12,9 @@
       </div>
     </template>
     
-    <Index v-if="!inCreate"/>
+    <Index 
+      v-if="!inCreate"
+    />
     <Create
       @createOrUpdate="create"
       @cancel="returnCreate"
@@ -37,7 +38,7 @@ export default {
     },
     data(){
         return{
-            inCreate: false
+            inCreate: false,
         }
     },
     methods: {
@@ -46,8 +47,10 @@ export default {
       },
       returnCreate(){
         this.inCreate = false
-      }
-    }
+      },
+      
+    },
+
 }
 </script>
 
