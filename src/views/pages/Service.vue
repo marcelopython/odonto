@@ -1,35 +1,37 @@
 <template>
-  <PageWrapper>
+    <PageWrapper title="Serviços">
     <template #header>
       <div class="p-4 sm:p-6">
-        <h2 class="text-xl font-semibold leading-tight">Pacientes</h2>
+        <h2 class="text-xl font-semibold leading-tight">Serviços</h2>
         <Buttons
          variant="info"
          :class="'float-right mb-3'"
-         @click="inCreate = !inCreate"
-         v-if="!inCreate && permission('customer.create')"
-        > Cadastar Paciente </Buttons>
+         @click="modalService"
+         v-if="permission('service.create')"
+        > Cadastar Serviço </Buttons>
       </div>
     </template>
     
     <Index 
-      v-if="!inCreate"
+      v-if="permission('service.read')"
+      :load="loadList"
     />
     <Create
       @createOrUpdate="create"
       @cancel="returnCreate"
-     v-if="inCreate && permission('customer.create')"
+      :load="loadCreate"
+      v-if="permission('service.create')"
     />
-
-  </PageWrapper>
+    </PageWrapper>
 </template>
 
 <script>
+
 import Client from '@/services/Client'
 const client = new Client()
 import moment from 'moment'
-import Index from '@/components/pages/customer/Index.vue'
-import Create from '@/components/pages/customer/Create.vue'
+import Index from '@/components/pages/service/Index.vue'
+import Create from '@/components/pages/service/Create.vue'
 import { mapGetters } from 'vuex'
     
 export default {
@@ -40,17 +42,25 @@ export default {
     data(){
         return{
             inCreate: false,
+            loadCreate: false,
+            loadList: false
         }
     },
     computed:{
       ...mapGetters(['permission']),
     },
     methods: {
+      modalService(){
+        this.loadCreate = true
+      },
       create(){
         this.inCreate = false
+        this.loadCreate = false
+        this.loadList = true
       },
       returnCreate(){
         this.inCreate = false
+        this.loadCreate = false
       },
       
     },

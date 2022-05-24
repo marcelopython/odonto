@@ -62,6 +62,13 @@ export default [
         meta: {permission: 'read'},
         component: () => import('@/views/pages/User.vue'),
         beforeEnter: authentication,
+      },      
+      {
+        path: '/servicos',
+        name: 'Service',
+        meta: {permission: 'read'},
+        component: () => import('@/views/pages/Service.vue'),
+        beforeEnter: authentication,
       },
       {
         path: '/Blank',

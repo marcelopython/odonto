@@ -136,11 +136,6 @@ export default {
 }
 </script>
 <script setup>
-// import PageWrapper from '@/components/PageWrapper.vue'
-// import { onMounted, ref } from 'vue'
-// import BaseCard from '@/components/BaseCard.vue'
-// import Button from '@/components/Button.vue'
-// import ApexCharts from 'apexcharts'
 // import { ChartBarIcon, TrendingUpIcon, TrendingDownIcon, MinusIcon } from '@heroicons/vue/outline'
 </script>
 

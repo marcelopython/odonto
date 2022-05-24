@@ -24,17 +24,18 @@
                 <CurrencyDollarIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
         </SidebarLink> -->
-<!-- 
+
         <SidebarLink  
             v-if="permission('service.read')"  
-            :to="{ name: 'Blank' }"
+            :to="{ name: 'Service' }"
              title="Serviços" 
-             :active="isCurrentRoute('Blank')"
+             :active="isCurrentRoute('Service')"
              >
             <template #icon>
                 <CheckIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
-            </template> -->
-        <!-- </SidebarLink> -->
+            </template>
+        </SidebarLink>
+
         <!-- <SidebarCollapsible title="Pages" :active="isCurrentPath('/pages')">
             <template #icon>
                 <DocumentIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
