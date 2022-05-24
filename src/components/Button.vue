@@ -17,7 +17,7 @@
         <span v-if="srText" class="sr-only">{{ srText }}</span>
         <slot :iconSizeClasses="iconSizeClasses" />
     </a>
-    <button v-else :type="type" :class="classes" @click="handleClick" :disabled="disabled">
+    <button style="justify-content: center;" v-else :type="type" :class="classes" @click="handleClick" :disabled="disabled">
         <span v-if="srText" class="sr-only">{{ srText }}</span>
         <slot :iconSizeClasses="iconSizeClasses" />
     </button>

@@ -14,17 +14,26 @@
                 <DashboardIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
         </SidebarLink>
-        <!-- <SidebarLink
-            v-if="permission('financial.read')"  
-            :to="{ name: 'Blank' }"
-             title="Financeiro" 
-             :active="isCurrentRoute('Blank')"
+        <SidebarLink
+            v-if="permission('call.read')"  
+            :to="{ name: 'Call' }"
+             title="Atendimentos" 
+             :active="isCurrentRoute('Call')"
+             >
+            <template #icon>
+                <CurrencyDollarIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
+            </template>
+        </SidebarLink>
+ <!-- <SidebarLink
+            v-if="permission('call.read')"  
+            :to="{ name: 'Call' }"
+             title="Atendimentos" 
+             :active="isCurrentRoute('Call')"
              >
             <template #icon>
                 <CurrencyDollarIcon class="flex-shrink-0 w-6 h-6" aria-hidden="true" />
             </template>
         </SidebarLink> -->
-
         <SidebarLink  
             v-if="permission('service.read')"  
             :to="{ name: 'Service' }"

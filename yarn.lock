@@ -497,6 +497,11 @@
   "resolved" "https://registry.npmjs.org/@vue/shared/-/shared-3.2.35.tgz"
   "version" "3.2.35"
 
+"@vueform/multiselect@^2.3.4":
+  "integrity" "sha512-trlY2muCOx2mp1f9n3qHLiebz8gtNWr59KvjnhkcpazBl/4tZRVr6U+sG3wICisSRj89ILUVjyp9tOdOAGsBvA=="
+  "resolved" "https://registry.npmjs.org/@vueform/multiselect/-/multiselect-2.3.4.tgz"
+  "version" "2.3.4"
+
 "@vueuse/core@^7.5.5":
   "integrity" "sha512-PRRgbATMpoeUmkCEBtUeJgOwtew8s+4UsEd+Pm7MhkjL2ihCNrSqxNVtM6NFE4uP2sWnkGcZpCjPuNSxowJ1Ow=="
   "resolved" "https://registry.npmjs.org/@vueuse/core/-/core-7.7.1.tgz"
@@ -1662,6 +1667,11 @@
     "rollup" "^2.59.0"
   optionalDependencies:
     "fsevents" "~2.3.2"
+
+"vue-bridge-webview@^1.1.0":
+  "integrity" "sha512-vOGgR63Iah9xM/2OOYBMjHolIqOHz6MaqmXhs3JCMGmoPIHJk/moOI6N1KTvA2uYemNBLTKg15ghdbpyOb9Y1w=="
+  "resolved" "https://registry.npmjs.org/vue-bridge-webview/-/vue-bridge-webview-1.1.0.tgz"
+  "version" "1.1.0"
 
 "vue-cli-plugin-env@^1.0.0":
   "integrity" "sha512-BeIghIljNWXNec1VB4tpk2tycuE2rp/QT68QHcTI792pLbrdWwpZSO8OTHVmUNPYkv3HaBAnUPQBFrwlcuNGaA=="

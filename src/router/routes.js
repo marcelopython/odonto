@@ -69,6 +69,13 @@ export default [
         meta: {permission: 'read'},
         component: () => import('@/views/pages/Service.vue'),
         beforeEnter: authentication,
+      },     
+       {
+        path: '/atendimentos',
+        name: 'Call',
+        meta: {permission: 'read'},
+        component: () => import('@/views/pages/Call.vue'),
+        beforeEnter: authentication,
       },
       {
         path: '/Blank',
