@@ -27,12 +27,15 @@ export default {
       if (Cookie.get('access_token')) {
           this.$store.state.access_token = Cookie.get('access_token')
           client.get('user/logged').then(res => {
+            Cookie.set('isLogged', true)
+            Cookie.set('roles', JSON.stringify(res.data.roles))
             this.$store.state.user = res.data.user
             this.$store.state.roles = res.data.roles
             this.$store.state.isLogged = true
           }).catch(e=>{
             if(e.response.status === 401){
-            this.$router.push('/login')
+              Cookie.set('isLogged', false)
+              this.$router.push('/login')
             }
           })
       } else {

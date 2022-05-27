@@ -7,11 +7,13 @@ import 'flowbite';
 import '@/index.css'
 import store from './store/index'
 import './services/handleErrors.js'
+import '@vueform/multiselect/themes/default.css'
 import VueTheMask from 'vue-the-mask'
 
 
 const app = createApp(App)
 
+app.config.productionTip = false;
 app.use(store)
 app.use(VueTheMask)
 app.use(router)

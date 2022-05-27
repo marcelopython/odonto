@@ -2,7 +2,7 @@
     <footer
         class="flex flex-col flex-shrink-0 w-full gap-2 px-6 py-4 lg:flex-row lg:justify-between"
     >
-        <p class="text-sm text-gray-500 dark:text-gray-400">
+        <!-- <p class="text-sm text-gray-500 dark:text-gray-400">
             &#169;
             <span>{{ new Date().getFullYear() }}</span> K UI, All rights reserved
         </p>
@@ -19,7 +19,7 @@
                 target="_blank"
                 class="text-blue-600 hover:underline"
             >Ahmed Kamel</a>
-        </p>
+        </p> -->
     </footer>
 </template>
 

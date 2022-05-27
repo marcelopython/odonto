@@ -84,6 +84,14 @@ export default [
         beforeEnter: authentication,
         component: () => import('@/views/pages/Blank.vue'),
       },
+      {
+        path: '/orcamentos',
+        name: 'Order',
+        meta: {permission: 'read'},
+        beforeEnter: authentication,
+        component: () => import('@/views/pages/Order.vue'),
+      },
+      
       // {
       //   path: '/produto',
       //   name: 'Product',

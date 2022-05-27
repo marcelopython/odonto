@@ -11,10 +11,6 @@
       </div>
     </template>
 
-<!-- <webview id="foo" src="https://www.github.com/" style="display:inline-flex; width:640px; height:480px"></webview> -->
-
-<div id="painel_whatsapp"></div>
-
     <Index v-if="permission('call.read')" :load="loadList" />
 
     <BaseModal size="large" id="modal-call" :title="'Orçamento'">
@@ -84,6 +80,7 @@
           <div class="mb-3">
             <span style="margin-bottom: 15px">4. Enviar para o cliente.</span>
           </div>
+          <div>
           <div style="width: 20%; margin-bottom: 15px; ">
             <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Desconto
@@ -110,6 +107,7 @@
               "
               required
             />
+          </div>
           </div>
           <div style="display: flex; justify-content: space-around">
             <div style="width: 45%">
@@ -378,4 +376,4 @@ import PageWrapper from '@/components/PageWrapper.vue'
 import Buttons from '@/components/Button.vue'
 import Pagination from '@/components/base/Pagination.vue'
 </script>
-<style src="@vueform/multiselect/themes/default.css"></style>
+
