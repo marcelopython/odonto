@@ -1,22 +1,23 @@
 <template>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-2">
-    <div class="flex" v-if="permission('service.read')">
+    <div class="flex" v-if="permission('order.read')">
       <div class="col-6 mb-3">   
           <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Your Email</label>
           <div class="relative">
               <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                   <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
               </div>
-              <input  @keyup="searchService" v-model="search" type="search" id="search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar" required>
+              <input  @keyup="searchOrder" v-model="search" type="search" id="search" class="block p-4 pl-10 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Buscar" required>
           </div>
       </div>
     </div>
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3">Nome</th>
+          <th scope="col" class="px-6 py-3">#ID</th>
+          <th scope="col" class="px-6 py-3">Cliente</th>
+          <th scope="col" class="px-6 py-3">Conta</th>
           <th scope="col" class="px-6 py-3">Valor</th>
-          <th scope="col" class="px-6 py-3">Valor Min.</th>
           <th scope="col" class="px-6 py-3">Data</th>
           <th scope="col" class="px-6 py-3">
             <span class="sr-only">Edit</span>
@@ -26,29 +27,35 @@
       <tbody>
         <tr
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-          v-for="service in dataservice.data"
-          :key="service.id"
+          v-for="order in dataorder.data"
+          :key="order.id"
         >
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-            {{ service.name }}
+            <div class="read-status"></div><span> {{ order.id }}</span>
+          </th>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+            {{ order.customer.name }}
           </th>
           <td class="px-6 py-4">
-            <span>{{ formatMoney(service.amount) }}</span>
+            <span>{{ order.customer.phone }}</span>
+            <br />
+            <span>{{ order.customer.email }}</span>
           </td>
           <td class="px-6 py-4">
-            <span>{{ formatMoney(service.amount_min) }}</span>
+            <span>{{ formatMoney(order.amount) }}</span>
           </td>
           <td class="px-6 py-4">
-            <span>{{ moment(service.created_at).format('DD/MM/YYYY') }}</span>
+            <span>{{ moment(order.created_at).format('DD/MM/YYYY') }}</span>
           </td>
           <td class="px-6 py-4 text-right">
-            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+              <a @click="showInfo(order.id)"
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ver</a>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <Pagination @changePage="paginate" :links="dataservice.links" />
+    <Pagination @changePage="paginate" :links="dataorder.links" />
 
   </div>
 </template>
@@ -71,7 +78,7 @@ export default {
   },
   data() {
     return {
-      dataservice: [],
+      dataorder: [],
       search: ''
     }
   },
@@ -82,7 +89,7 @@ export default {
   watch:{
     load: function(){
       if(this.load){
-        this.services() 
+        this.orders() 
       }
     }
   },
@@ -99,22 +106,25 @@ export default {
     },
     formatMoney: function(){
       return (value) => {
-          return Number(value).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+          return Number(value / 100).toLocaleString(undefined, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
       }
     }
   },
   methods: {
-    searchService(){
+    showInfo(id){
+      this.$emit('showInfo', id);
+    },
+    searchOrder(){
       setTimeout(()=>{
-        this.services() 
+        this.orders() 
       }, 500);
     },
-    async services(page='1') {
+    async orders(page='1') {
       let linkPage = ''
       if(page.url) {
-          linkPage = 'service?page=' + page.url.split('?page=')[1]
+          linkPage = 'order?page=' + page.url.split('?page=')[1]
       }else{
-          linkPage = 'service?page='+page
+          linkPage = 'order?page='+page
       }
       let search = '';
 
@@ -125,7 +135,8 @@ export default {
       }
       
       return await client.get(linkPage+'&search='+search).then((response) => {
-        this.dataservice = response.data
+        console.log(response.data)
+        this.dataorder = response.data
       })
     },
     tooltipAddress() {
@@ -140,12 +151,12 @@ export default {
       })
     },
     async paginate(page){
-      await this.services(page)
+      await this.orders(page)
       this.tooltipAddress()
     }
   },
   async mounted() {
-    if(this.permission('service.read')){
+    if(this.permission('order.read')){
       this.paginate(1)
     }
   },
@@ -154,3 +165,14 @@ export default {
 <script setup>
 // import { ChartBarIcon, TrendingUpIcon, TrendingDownIcon, MinusIcon } from '@heroicons/vue/outline'
 </script>
+
+<style >
+  .read-status{
+    display: inline-block;
+    margin-right: 5px;
+    height: 10px;
+    width: 10px;
+    background-color: rgb(0, 4, 255);
+    border-radius: 50%;
+  }
+</style>

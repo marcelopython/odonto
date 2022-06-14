@@ -62,8 +62,7 @@ export default {
         this.inCreate = false
         this.loadCreate = false
       },
-      
-    },
+    }
 
 }
 </script>

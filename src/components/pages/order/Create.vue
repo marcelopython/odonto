@@ -305,11 +305,14 @@
       </div>
       <div style="display: flex; margin: 15px 0 55px">
         <Buttons 
-        variant="success" :class="'float-right mb-3'" :style="`width: 100%; padding: 15px`">
+          @click="finished"
+          variant="success" :class="'float-right mb-3'"
+         :style="`width: 100%; padding: 15px`">
             Prosseguir
         </Buttons>
       </div>
     </form>
+<!--     
      <BaseModal 
         size="smal"
         id="modal-order"
@@ -340,7 +343,7 @@
       </template>
 
 
-     </BaseModal>
+     </BaseModal> -->
   </div>
 </template>
 <script>
@@ -378,6 +381,7 @@ export default {
         { value: 'PIX', name: 'Pix' },
       ],
       paymentPeriod: [
+        { value: 'AVISTA', name: 'Avista' },
         { value: 'SEMANAL', name: 'Semanal' },
         { value: 'MENSAL', name: 'Mensal' },
         { value: 'ANUAL', name: 'Anual' },
@@ -449,10 +453,14 @@ export default {
         this.order.service_total.push({id: itemSelected, total: service.item})
       })
 
+      if(!this.order.payment_period){
+        this.order.payment_period = 'AVISTA'
+      }
+
       let response = await client.post('order', this.order)
-      console.log(this.order)
-      console.log(response)
       
+      this.$router.push('/atendimentos/'+response.data.id)
+
     },
     formatarMoeda(event) {
       let elemento = event.target

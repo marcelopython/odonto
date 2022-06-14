@@ -59,7 +59,6 @@
 import Client from '@/services/Client'
 const client = new Client()
 import { mapGetters } from 'vuex'
-import moment from 'moment'
 import Buttons from '@/components/Button.vue'
 import Pagination from '@/components/base/Pagination.vue'
 import ModalUser from '@/components/pages/user/ModalUser.vue'

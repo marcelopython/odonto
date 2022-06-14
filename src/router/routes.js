@@ -71,7 +71,7 @@ export default [
         beforeEnter: authentication,
       },     
        {
-        path: '/atendimentos',
+        path: '/atendimentos/:_id(\\d+)?',
         name: 'Call',
         meta: {permission: 'read'},
         component: () => import('@/views/pages/Call.vue'),
@@ -91,6 +91,7 @@ export default [
         beforeEnter: authentication,
         component: () => import('@/views/pages/Order.vue'),
       },
+      
       
       // {
       //   path: '/produto',

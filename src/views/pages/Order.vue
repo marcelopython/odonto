@@ -1,18 +1,5 @@
 <template>
     <PageWrapper title="Orçamentos">
-        <template #header>
-        <div class="p-4 sm:p-6">
-            <h2 class="text-xl font-semibold leading-tight">Orçamentos</h2>
-            <div>
-            <Buttons variant="info" :class="'float-right mb-3'" v-if="permission('order.create')">
-                Orçamento
-            </Buttons>
-            </div>
-        </div>
-        </template>
-
-        <!-- <Index /> -->
-
 
         <Create/>
 
