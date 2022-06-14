@@ -41,7 +41,7 @@
         </div>
 
         <div class="proposal">
-          <Buttons >
+          <Buttons variant="info" @click="sendZap">
             Enviar proposta
           </Buttons>
         </div>
@@ -95,6 +95,21 @@ export default {
     },
   },
   methods: {
+     async sendZap(){
+
+        let servicesName = '';
+       
+        [...this.order.order_service].forEach(service=>{
+            servicesName += service.service.name+', '
+        })
+ 
+        let text = `
+            Olá *${this.order.customer.name.split(' ')[0]}*\n\n_Segue nosso orçamento_.\n\n*Valor*: R$ ${Number.parseFloat(this.order.amount).toFixed(2)}\n\n*Forma de pagamento*: Cartão / 3\n\n*Serviço(s)*: ${servicesName.slice(0, -2)}
+        `;
+
+        let link = `https://web.whatsapp.com/send?phone=${this.order.customer.phone}&text=`+window.encodeURIComponent(text)
+        window.open(link, '_blank').focus();
+    },
     cancel() {
       this.$emit('modalHide')
     },
@@ -122,6 +137,18 @@ import moment from 'moment'
   justify-content: space-between;
   font-size: 14px;
 }
+
+.proposal{
+  margin-top: 15px;
+  width: 100%;
+}
+
+.proposal>button{
+  width: 100%;
+  padding: 15px;
+}
+
+
 /* 'BUDGET', 'ACCEPTED', 'CANCELED', 'FINISHED' */
 .BUDGET {
   color: rgb(0, 4, 255);
