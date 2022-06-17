@@ -8,7 +8,7 @@
   >
     <div :class="modalSize">
       <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700" style="margin-top: 227px;">
         <!-- Modal header -->
         <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
           <h3 class="text-xl font-medium text-gray-900 dark:text-white">

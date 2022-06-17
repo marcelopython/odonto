@@ -21,6 +21,7 @@
           <th>Nome</th>
           <th>Email</th>
           <th>Telefone</th>
+          <th>Tipo</th>
           <th>Grupo</th>
           <th v-if="permission('user.update')">Ação</th>
         </tr>
@@ -34,6 +35,7 @@
           <td>{{user.first_name}} {{user.last_name}}</td>
           <td>{{user.phone}}</td> 
           <td>{{user.email}}</td>
+          <td>{{user.type}}</td>
           <td>{{user.permission_group}}</td>      
           <td v-if="permission('user.update')">
             <button @click="editUser(user)">
@@ -108,6 +110,7 @@ export default {
       try{
         let response = await client.get('user')
         this.usersData = response.data
+        // console.log(this.usersData)
       }catch(e){
         console.log(e)
       }
@@ -116,11 +119,6 @@ export default {
 }
 </script>
 <script setup>
-// import PageWrapper from '@/components/PageWrapper.vue'
-// import { onMounted, ref } from 'vue'
-// import BaseCard from '@/components/BaseCard.vue'
-// import Button from '@/components/Button.vue'
-// import ApexCharts from 'apexcharts'
 import { PencilIcon } from '@heroicons/vue/outline'
 </script>
 

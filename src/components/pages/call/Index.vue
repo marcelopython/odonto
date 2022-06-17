@@ -15,6 +15,7 @@
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3">#ID</th>
+          <th scope="col" class="px-6 py-3">Dotor</th>
           <th scope="col" class="px-6 py-3">Cliente</th>
           <th scope="col" class="px-6 py-3">Conta</th>
           <th scope="col" class="px-6 py-3">Valor</th>
@@ -32,6 +33,9 @@
         >
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
             <div class="read-status"></div><span> {{ order.id }}</span>
+          </th>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+            {{ order.doctor }}
           </th>
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
             {{ order.customer.name }}

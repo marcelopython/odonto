@@ -7,11 +7,29 @@ const state = {
   isLogged: false,
   access_token: '',
   user: {},
-  roles: []
+  roles: [],
+  typesUser: [
+    {
+      'label': 'Padrão',
+      'value': 'DEFAULT'
+    },
+    {
+      'label': 'Administrador',
+      'value': 'ADMIN'
+    },
+    {
+      'label': 'Doutor',
+      'value': 'DOUTOR'
+    },
+    {
+      'label': 'Atendente',
+      'value': 'ATENDENTE'
+    },
+  ]
 }
 
 export default new Vuex.Store({
-  ...state,
+  state,
   getters: {
     permission: (state) => (permission) => {
       return state.roles.find(item => item.name === permission)

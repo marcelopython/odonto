@@ -25,6 +25,7 @@ export default {
         },
       })
       if (Cookie.get('access_token')) {
+        // console.log(this.$store.state)
           this.$store.state.access_token = Cookie.get('access_token')
           client.get('user/logged').then(res => {
             Cookie.set('isLogged', true)
